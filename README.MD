@@ -1,12 +1,12 @@
 Last Updated: 30 June 2025
 Known Issues:
 
-    creature_data Table Missing
+creature_data Table Missing
     - NPC duplication does not include the creature_data table, causing missing NPC attributes.
 
     Solution: Additional function similar to the others in duplication.py (estimated 2–6 hours of work) See comment in code "TODO".
 
-    Phase Pollution (Phases 2–256):
+Phase Pollution (Phases 2–256):
     - NPCs between phases 2–256 have been cloned, polluting Phase 1–20 (1, 512+) with quest mobs that shouldn't be in the open world.
 
     Solution: Partial logic exists but is  not yet implemented into the functions.

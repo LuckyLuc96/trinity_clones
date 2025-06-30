@@ -18,7 +18,7 @@ echo "Step 3: Generate duplicated_templates.sql"
 python3 duplicate.py --input-csv npc_export_template.csv --new-id-start 900000 --output-sql duplicated_templates.sql --npc
 
 echo "Step 4: Export duplicated NPCs"
-mysql --max_allowed_packet=1G -u root -p$MYSQL_PASS $DB > duplicated_templates.sql
+mysql --max_allowed_packet=1G -u root -p$MYSQL_PASS $DB < duplicated_templates.sql
 
 echo "Step 5: Generate duplicated_creatures.sql"
 mysql --max_allowed_packet=1G -u root -p$MYSQL_PASS -B --column-names -e "SELECT * FROM creature_template WHERE entry >= 900000;" $DB > duplicated_npcs.csv

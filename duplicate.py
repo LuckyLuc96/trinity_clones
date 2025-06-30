@@ -2,20 +2,7 @@ import csv
 import argparse
 
 '''
-Simply two commands now: Login to mysql as root and run:
-SET GLOBAL max_allowed_packet=1073741824;
-
-In BASH not mysql run: bash runall.sh
-OR
-do the following 1 at a time:
-
-mysql --max_allowed_packet=1G -u root -p -e "SELECT * FROM creature_template WHERE exp = 2;" trinity_world > npc_export_template.csv
-mysql --max_allowed_packet=1G -u root -p trinity_world -B -e "SELECT c.*, ct.* FROM creature c JOIN creature_template ct ON c.id = ct.entry WHERE ct.exp = 2;" > npc_export_map.csv
-python3 duplicate.py --input-csv npc_export_template.csv --new-id-start 900000 --output-sql duplicated_templates.sql --npc
-mysql --max_allowed_packet=1G -u root -p trinity_world > duplicated_templates.sql
-mysql --max_allowed_packet=1G -u root -p -B --column-names -e "SELECT * FROM creature_template WHERE entry >= 900000;" trinity_world > duplicated_npcs.csv
-python3 duplicate.py --input-csv npc_export_map.csv --template-csv duplicated_npcs.csv --new-id-start 2000000 --output-sql duplicated_creatures.sql --creature
-mysql --max_allowed_packet=1G -u root -p trinity_world < duplicated_creatures.sql
+Follow README.MD to install or utilize the phase system. It is not ready for production!
 '''
 
 PHASES = {
@@ -40,8 +27,6 @@ PHASES = {
     19: 67108864,
     20: 134217728
 }
-# Phases to explicitly SKIP (1-255)
-SKIP_PHASE_MASK = 0x1FF  # Binary mask covering phases 1 through 255
 
 def parse_phase(subname):
     if "(" in subname:
@@ -49,20 +34,13 @@ def parse_phase(subname):
     else:
         return int(subname.split(" ")[1])
 
+# Not integrated yet into the duplication functions, but should help to stop mobs from being duplicated in these critical "quest" phases.
 def should_duplicate_npc(original_phase_mask):
-    """
-    Returns True only if NPC should be duplicated
-    (Not in skipped phases and meets other criteria)
-    """
-    # Skip if in phases 1-255
-    if original_phase_mask & SKIP_PHASE_MASK:
-        return False
-
-    # Add other exclusion logic as needed
-    if original_phase_mask in [256, 512, 1024]:  # Example specific exclusions
+    if original_phase_mask in [2,4,6,8,16,32,64,128,256]:
         return False
 
     return True
+
 #Mob data in the database
 CREATURE_TEMPLATE_COLUMNS = [
     'entry', 'difficulty_entry_1', 'difficulty_entry_2', 'difficulty_entry_3',
@@ -114,6 +92,8 @@ def generate_npc_templates(input_csv: str, new_id_start: int, output_sql: str) -
 
         for phase_num in PHASES.items():
             new_npc = {}
+            # TODO:
+            # creature_addon data is not being copied and this leads to some important aspects of an NPC not carrying over.
             for col in CREATURE_TEMPLATE_COLUMNS:
                 if col == 'entry':
                     new_npc[col] = str(current_id)

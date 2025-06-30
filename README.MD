@@ -1,32 +1,31 @@
 Last Updated: 30 June 2025
 Known Issues:
 
-    creature_data Table Missing:
+    creature_data Table Missing
+    - NPC duplication does not include the creature_data table, causing missing NPC attributes.
 
-        NPC duplication does not include the creature_data table, causing missing NPC attributes.
-
-        Solution Required: Additional code in duplication.py (estimated 2–6 hours of work).
+    Solution: Additional function similar to the others in duplication.py (estimated 2–6 hours of work) See comment in code "TODO".
 
     Phase Pollution (Phases 2–256):
+    - NPCs between phases 2–256 have been cloned, polluting Phase 1–20 (1, 512+) with quest mobs that shouldn't be in the open world.
 
-        NPCs between phases 2–256 have been cloned, polluting Phase 1–20 (1, 512+) with quest mobs that shouldn't be in the open world.
+    Solution: Partial logic exists but is  not yet implemented into the functions.
 
-        Status: Partial logic exists but is incomplete.
 
 Installation:
 
-⚠️ Security Note: Using runall.sh stores your MySQL password in plaintext in your bash history.
+Security Note: Using runall.sh stores your MySQL password in plaintext in your bash history.
+
+Both options require this to variable to be set in mySQL with root user:
+
+SET GLOBAL max_allowed_packet=1073741824; -- 1GB buffer
+
 Option 1: Quick Setup (Less Secure)
 bash.
 
 bash runall.sh
 
 Option 2: Manual Steps (More Secure)
-
-    Increase MySQL Buffer (Run Once):
-    sql
-
-SET GLOBAL max_allowed_packet=1073741824; -- 1GB buffer
 
 Export NPC Templates:
 bash
@@ -51,9 +50,8 @@ bash
     python3 duplicate.py --input-csv npc_export_map.csv --template-csv duplicated_npcs.csv --new-id-start 2000000 --output-sql duplicated_creatures.sql --creature
     mysql --max_allowed_packet=1G -u root -p trinity_world < duplicated_creatures.sql
 
-Testing Changes:
-
-    The fastest way to test SQL generation is to drop your trinity_world database (or world if using vanilla TrinityCore).
+Further Development:
+    The fastest way to test the generated SQL data is to drop your trinity_world database (or world if using TrinityCore).
 
     The worldserver will regenerate it automatically.
 

@@ -46,19 +46,22 @@ mysql --max_allowed_packet=1G -u root -p trinity_world < duplicated_templates.sq
 Generate & Apply Creature Duplicates:
 bash
 
-    mysql --max_allowed_packet=1G -u root -p -B --column-names -e "SELECT * FROM creature_template WHERE entry >= 900000;" trinity_world > duplicated_npcs.csv
-    python3 duplicate.py --input-csv npc_export_map.csv --template-csv duplicated_npcs.csv --new-id-start 2000000 --output-sql duplicated_creatures.sql --creature
-    mysql --max_allowed_packet=1G -u root -p trinity_world < duplicated_creatures.sql
+mysql --max_allowed_packet=1G -u root -p -B --column-names -e "SELECT * FROM creature_template WHERE entry >= 900000;" trinity_world > duplicated_npcs.csv
+
+python3 duplicate.py --input-csv npc_export_map.csv --template-csv duplicated_npcs.csv --new-id-start 2000000 --output-sql duplicated_creatures.sql --creature
+
+mysql --max_allowed_packet=1G -u root -p trinity_world < duplicated_creatures.sql
 
 Further Development:
-    The fastest way to test the generated SQL data is to drop your trinity_world database (or world if using TrinityCore).
 
-    The worldserver will regenerate it automatically.
+The fastest way to test the generated SQL data is to drop your trinity_world database (or world if using TrinityCore).
+
+The worldserver will regenerate it automatically.
 
 Support:
 
 For questions, contact:
 
-    Discord: Judgefae
+  Discord: Judgefae
 
-    Email: djhxiurr1@mozmail.com
+  Email: djhxiurr1@mozmail.com

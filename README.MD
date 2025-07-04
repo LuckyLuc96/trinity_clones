@@ -2,6 +2,8 @@ This is free and open source software and uses the GPL-3 license.
 
 The python script works alongside the trinity core mySQL database to duplicate all NPCs with the tag exp=2 or expansion level 2. From there it Duplicates their statistics across 20x NPCs that are identical in everyway 3xcept a new surname which indicates the intended phase value. The script then places these cloned NPCs into the world via the Creature table in 20x phases. The phases number 1 through 20 and use the value of 2 to the power of the desired phase, starting at zero. 2^0 = 1 and so on,and these phases are totally independent from each other. Game objects are not yet implemented in this script.
 
+Many quests utlize various phases,and those phases are skipped, which is why there is a gap between phase 1 and phase 2 in the file.
+
 
 Known Issues:
 

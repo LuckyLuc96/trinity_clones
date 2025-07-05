@@ -1,8 +1,9 @@
 import csv
 import argparse
 
+DB = "trinity_world" #Replace with your DB name if not trinity_world. Usually it is 'world'
 '''
-Follow README.MD to install or utilize the phase system. It is not ready for production!
+Follow README.MD to install or utilize the phase system. It is not ready for production!`
 '''
 
 PHASES = {
@@ -63,11 +64,10 @@ CREATURE_COLUMNS = ["guid" ,"id" ,"map" ,"zoneId" ,"areaId" ,"spawnMask" ,"phase
     ,"MovementType" ,"npcflag" ,"unit_flags" ,"dynamicflags" ,"ScriptName" ,"StringId"
     ,"VerifiedBuild"]
 
-def get_default_value(column):
+def creature_defaults(column): #This should not be used unless something goes wrong with the import.
     defaults = {
         'entry': '0',
         'difficulty_entry_1': '0',
-        # ... all other default values ...
         'VerifiedBuild': 'NULL'
     }
     return defaults.get(column, 'NULL')
@@ -79,7 +79,7 @@ def generate_npc_templates(input_csv: str, new_id_start: int, output_sql: str) -
 
     sql_commands = [
         "-- Auto-generated NPC TEMPLATE clones for all wrath of the lich king NPCs",
-        "USE trinity_world;",
+        f"USE {DB};",
         "DELETE FROM creature_template WHERE entry >= 900000 AND subname LIKE 'Phase %';",
         "START TRANSACTION;"
     ]
@@ -102,7 +102,7 @@ def generate_npc_templates(input_csv: str, new_id_start: int, output_sql: str) -
                 elif col == 'name':
                     new_npc[col] = npc.get(col, '')
                 else:
-                    new_npc[col] = npc.get(col, get_default_value(col))
+                    new_npc[col] = npc.get(col, creature_defaults(col))
 
             values = []
             for col in CREATURE_TEMPLATE_COLUMNS:
@@ -176,7 +176,7 @@ def generate_creature(template_csv: str, original_csv: str, new_id_start: int, o
                 elif col == 'id':
                     new_row[col] = entry
                 else:
-                    new_row[col] = npc.get(col, get_default_value(col))
+                    new_row[col] = npc.get(col, creature_defaults(col))
 
             formatted_values = []
             for col in CREATURE_COLUMNS:

@@ -9,6 +9,7 @@ read -s -p "Enter MySQL password: " MYSQL_PASS
 echo
 
 echo "Step 1: Export creature_template with exp=2"
+echo "SET GLOBAL max_allowed_packet=1073741824;" | mysql -u root -p"$MYSQL_PASS"
 mysql --max_allowed_packet=1G -u root -p$MYSQL_PASS --column-names -e "SELECT * FROM creature_template WHERE exp = 2;" $DB > npc_export_template.csv
 
 echo "Step 2: Export joined creature and creature_template"

@@ -29,6 +29,7 @@ bash runall.sh
 
 *Step 0: Login to mysql and set a variable*
 SET GLOBAL max_allowed_packet=1073741824; -- 1GB buffer
+
 exit mysql and continue:
 
 *Step 1: Export NPC Templates:*

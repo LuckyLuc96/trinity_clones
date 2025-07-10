@@ -44,25 +44,40 @@ def should_duplicate_npc(original_phase_mask):
 
 #Mob data in the database
 CREATURE_TEMPLATE_COLUMNS = [
-    'entry', 'difficulty_entry_1', 'difficulty_entry_2', 'difficulty_entry_3',
-    'KillCredit1', 'KillCredit2', 'modelid1', 'modelid2', 'modelid3', 'modelid4',
-    'name', 'subname', 'IconName', 'gossip_menu_id', 'minlevel', 'maxlevel',
-    'exp', 'faction', 'npcflag', 'speed_walk', 'speed_run', 'scale', 'rank',
-    'dmgschool', 'BaseAttackTime', 'RangeAttackTime', 'BaseVariance', 'RangeVariance',
-    'unit_class', 'unit_flags', 'unit_flags2', 'dynamicflags', 'family', 'type',
-    'type_flags', 'lootid', 'pickpocketloot', 'skinloot', 'PetSpellDataId',
-    'VehicleId', 'mingold', 'maxgold', 'AIName', 'MovementType', 'HoverHeight',
-    'HealthModifier', 'ManaModifier', 'ArmorModifier', 'DamageModifier',
-    'ExperienceModifier', 'RacialLeader', 'movementId', 'RegenHealth',
-    'mechanic_immune_mask', 'spell_school_immune_mask', 'flags_extra',
-    'ScriptName', 'StringId', 'VerifiedBuild'
+    'entry', 'difficulty_entry_1', 'difficulty_entry_2',
+    'difficulty_entry_3', 'KillCredit1', 'KillCredit2',
+    'name', 'subname', 'IconName', 'gossip_menu_id',
+    'minlevel','maxlevel', 'exp', 'faction', 'npcflag',
+    'speed_walk', 'speed_run', 'speed_swim', 'speed_flight',
+    'detection_range', 'scale', 'rank','dmgschool',
+    'DamageModifier', 'BaseAttackTime', 'RangeAttackTime',
+    'BaseVariance', 'RangeVariance', 'unit_class',
+    'unit_flags', 'unit_flags2', 'dynamicflags', 'family',
+    'trainer_type', 'trainer_spell', 'trainer_class',
+    'trainer_race', 'type', 'type_flags', 'lootid',
+    'pickpocketloot', 'skinloot', 'PetSpellDataId',
+    'VehicleId', 'mingold', 'maxgold', 'AIName',
+    'MovementType', 'HoverHeight', 'HealthModifier',
+    'ManaModifier', 'ArmorModifier', 'ExperienceModifier',
+    'RacialLeader', 'movementId', 'RegenHealth',
+    'mechanic_immune_mask', 'spell_school_immune_mask',
+    'flags_extra', 'ScriptName', 'VerifiedBuild'
 ]
 #Mob data placed in the world
-CREATURE_COLUMNS = ["guid" ,"id" ,"map" ,"zoneId" ,"areaId" ,"spawnMask" ,"phaseMask"
-    ,"modelid" ,"equipment_id" ,"position_x" ,"position_y" ,"position_z" ,"orientation"
-    ,"spawntimesecs" ,"wander_distance" ,"currentwaypoint" ,"curhealth" ,"curmana"
-    ,"MovementType" ,"npcflag" ,"unit_flags" ,"dynamicflags" ,"ScriptName" ,"StringId"
-    ,"VerifiedBuild"]
+CREATURE_COLUMNS = [
+    'guid', 'id1', 'id2', 'id3', 'map', 'zoneId',
+    'areaId', 'spawnMask', 'phaseMask', 'equipment_id',
+    'position_x', 'position_y', 'position_z',
+    'orientation', 'spawntimesecs', 'wander_distance',
+    'currentwaypoint', 'curhealth', 'curmana',
+    'MovementType', 'npcflag', 'unit_flags',
+    'dynamicflags', 'ScriptName', 'VerifiedBuild',
+    'CreateObject', 'Comment'
+]
+#Mob misc data
+CREATURE_ADDON_COLUMNS = [
+    'guid', 'path_id', 'mount', 'bytes1', 'bytes2', 'emote', 'visibilityDistanceType', 'auras'
+]
 
 def creature_defaults(column): #This should not be used unless something goes wrong with the import.
     defaults = {
